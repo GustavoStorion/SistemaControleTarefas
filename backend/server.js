@@ -1,22 +1,27 @@
-require('dotenv').config
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const tarefasRoutes = require('./routes/tarefas')
+import express from "express";
 
-const app = express()
-const port = process.env.PORT || 3000
+import dotenv from "dotenv";
+dotenv.config({ path: "../.env" });
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Banco conectado'))
-    .catch(err => console.log(err))
+import mongoose from "mongoose";
+import cors from "cors";
+import tarefasRoutes from "./routes/tarefas.js";
 
-app.use(cors())
-app.use(bodyParser.json())
-app.use('/tarefas', tarefasRoutes)
+const app = express();
+const PORT = process.env.PORT || 3000;
+const URI = process.env.MONGODB_URI;
 
-app.listen(port, () => {
-    console.log('Servidor rodando em http://localhost:${port}')
+mongoose.connect(URI)
+    .then(() => {
+        console.log("MongoDB conectado com sucesso!");
+
+    app.listen(PORT, () => {
+        console.log(`Servidor: http://localhost:${PORT}`);
+  });
 })
+    .catch(err => {
+        console.error('Erro fatal ao conectar ao MongoDB:', err.message);
+    });
 
+app.use(cors());
+app.use("/tarefas", tarefasRoutes);

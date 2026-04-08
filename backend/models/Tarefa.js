@@ -1,8 +1,18 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose";
 
 const tarefaSchema = new mongoose.Schema({
-    descricao: {type: String, required: true},
-    concluida: {type: Boolean, default: false}
-})
+  descricao: {
+    type: String,
+    required: true,
+  },
+  concluida: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-module.exports = mongoose.model('Tarefa', tarefaSchema)
+export default mongoose.model("Tarefa", tarefaSchema);
+
+// OU PODE FAZER ASSIM(EXPORTAÇÃO MODERNA):
+// const Tarefa = mongoose.model("Tarefa", TarefaSchema);
+// export default Tarefa; // Exportação moderna
